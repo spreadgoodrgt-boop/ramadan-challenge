@@ -1566,7 +1566,7 @@
             
             // Production mode - calculate based on Ramadan start date
             const today = new Date();
-            const ramadanStart = new Date('2025-03-01'); // Update this to actual Ramadan start date
+            const ramadanStart = new Date('2025-02-14'); // Update this to actual Ramadan start date
             const diffTime = Math.abs(today - ramadanStart);
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
             return Math.min(Math.max(1, diffDays), 30);
