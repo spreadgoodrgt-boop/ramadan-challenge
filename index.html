@@ -871,7 +871,7 @@
                     </svg>
                 </div>
                 <h1 class="gold-gradient" style="font-size: 36px; margin-bottom: 10px;">Ramadan Challenge 2026</h1>
-                <p style="color: rgba(16, 185, 129, 0.8); font-size: 16px;">30 Days of Spiritual Transformation</p>
+                <p style="color: rgba(16, 185, 129, 0.8); font-size: 16px;">आइये इस रमजान अल्लाह की हिदायत को अपनी ज़िन्दगी में लाने की कोशिश करते है!</p>
             </div>
             
             <div class="login-card">
@@ -1031,7 +1031,7 @@
 
     <script>
         // Configuration
-        const SHEET_URL = 'https://script.google.com/macros/s/AKfycby7CZjxzlvM6YihvktMPSf4qdXz49rzi31_CeE8eEtjFpOQ7_cBTJ6NKgjj7BnKrMfuVw/exec'; // Replace with your Google Apps Script URL
+        const SHEET_URL = 'https://script.google.com/macros/s/AKfycbyx6hVbKdMneu5ipgAjXYbB83JVJmF_8m0Yb0--3wmcisE4P_yQs_THGGl_vw12IFAShw/exec'; // Replace with your Google Apps Script URL
         
         // TESTING MODE - Set to false for production
         const TESTING_MODE = true; // Shows navigation buttons to test all 30 days
@@ -2176,13 +2176,14 @@
 
         // Google Sheets integration
         function sendToGoogleSheets(day, tasksCompleted, points, streakBonus) {
-            // Skip if URL not configured
-            if (SHEET_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
-                console.log('Google Sheets not configured');
+            // Skip if URL is not set
+            if (!SHEET_URL || SHEET_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+                console.log('Google Sheets URL not configured, skipping.');
                 return;
             }
 
             const data = {
+                action: 'submitProgress',
                 timestamp: new Date().toISOString(),
                 name: userData.name,
                 mobile: userData.mobile,
@@ -2195,16 +2196,18 @@
                 currentStreak: userData.currentStreak
             };
 
+            console.log('Sending to Google Sheets:', data);
+
             fetch(SHEET_URL, {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'text/plain',
                 },
                 body: JSON.stringify(data)
-            }).catch(error => {
-                console.error('Error sending to Google Sheets:', error);
-            });
+            })
+            .then(() => console.log('Data sent to Google Sheets successfully.'))
+            .catch(error => console.error('Error sending to Google Sheets:', error));
         }
 
         // Initialize on page load
